@@ -1,5 +1,5 @@
 import pandas as pd
-df=pd.read_csv("salinity/Indian_Ocean_surface_oce.tab",
+df=pd.read_csv("Models/salinity/Indian_Ocean_surface_oce.tab",
                sep="\t",
                skiprows=19,
                engine="python")

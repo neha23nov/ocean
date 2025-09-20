@@ -32,7 +32,7 @@ for lat in lat_values:
         grid.append({"lat": lat, "lon": lon, "sal": sal})
         
 
-output_file="salinity/salinity_predictions.json"
+output_file="Models/salinity/salinity_predictions.json"
 with open(output_file,"w") as f:
     json.dump(grid,f)
     
