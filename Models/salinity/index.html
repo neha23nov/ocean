@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Salinity Globe</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: black; font-family: sans-serif; }
+    canvas { display: block; }
+    #tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      pointer-events: none;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div id="tooltip"></div>
+
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+    import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js";
+
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Lighting
+    const light = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(light);
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(20, 20, 20);
+    scene.add(pointLight);
+
+    // Globe
+    const radius = 5;
+    const globeGeometry = new THREE.SphereGeometry(radius, 64, 64);
+    const globeMaterial = new THREE.MeshPhongMaterial({
+      map: new THREE.TextureLoader().load("https://www.solarsystemscope.com/assets/img/textures/earth_clouds_2048.jpg"),
+      shininess: 5,
+      transparent: true,
+      opacity: 0.9
+    });
+    const globe = new THREE.Mesh(globeGeometry, globeMaterial);
+    scene.add(globe);
+
+    // Camera
+    camera.position.z = 12;
+
+    // Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    // Convert Lat/Lon → XYZ
+    function latLonToXYZ(lat, lon, r) {
+      const phi = (90 - lat) * (Math.PI / 180);
+      const theta = (lon + 180) * (Math.PI / 180);
+      const x = -r * Math.sin(phi) * Math.cos(theta);
+      const y = r * Math.cos(phi);
+      const z = r * Math.sin(phi) * Math.sin(theta);
+      return { x, y, z };
+    }
+
+    const tooltip = document.getElementById('tooltip');
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let intersectedObject = null;
+
+    // Load salinity data
+    fetch("salinity/salinity_predictions.json")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        data.forEach(point => {
+          const { x, y, z } = latLonToXYZ(point.lat, point.lon, radius + 0.05);
+
+          // Normalize salinity to color (blue → red)
+          const minSal = 34, maxSal = 37;
+          const norm = (point.sal - minSal) / (maxSal - minSal);
+          const color = new THREE.Color();
+          color.setHSL((1 - norm) * 0.7, 1, 0.5);
+
+          const sphere = new THREE.Mesh(
+            new THREE.SphereGeometry(0.05, 8, 8),
+            new THREE.MeshBasicMaterial({ color })
+          );
+          sphere.position.set(x, y, z);
+          sphere.userData = { salinity: point.sal, type: 'salinityPoint' };
+          scene.add(sphere);
+        });
+        console.log("Salinity data loaded and plotted.");
+      })
+      .catch(error => console.error("Error loading or parsing salinity data:", error));
+
+    // Handle mouse movement for hover effect and tooltip
+    function onMouseMove(event) {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(scene.children);
+
+      if (intersects.length > 0) {
+        const firstIntersect = intersects[0].object;
+        if (firstIntersect.userData.type === 'salinityPoint') {
+          if (intersectedObject !== firstIntersect) {
+            intersectedObject = firstIntersect;
+            tooltip.style.display = 'block';
+            tooltip.style.left = `${event.clientX + 10}px`;
+            tooltip.style.top = `${event.clientY + 10}px`;
+            tooltip.innerText = `Salinity: ${intersectedObject.userData.salinity.toFixed(2)}`;
+          }
+        } else {
+          if (intersectedObject) {
+            intersectedObject = null;
+            tooltip.style.display = 'none';
+          }
+        }
+      } else {
+        if (intersectedObject) {
+          intersectedObject = null;
+          tooltip.style.display = 'none';
+        }
+      }
+    }
+    window.addEventListener("mousemove", onMouseMove);
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      globe.rotation.y += 0.0008;
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize handler
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
