@@ -19,6 +19,9 @@ import Research from "./pages/Research";
 
 import SalinityGlobe from "./pages/salinity";
 import Waterquality from "./pages/waterquality";
+import Globe from "./pages/waste";
+import NitrateGlobe from "./pages/nitrate";
+
 
 
 function App() {
@@ -155,6 +158,14 @@ function App() {
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <Waterquality/>
+            </main>
+          }
+        />
+        <Route
+          path="/nitrate"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <NitrateGlobe/>
             </main>
           }
         />
