@@ -1,4 +1,3 @@
-// Global variables for raycaster and mouse
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let INTERSECTED = null;
@@ -38,7 +37,7 @@ async function createGlobe() {
     scene.add(globe);
 
     // Load your JSON data
-    const response = await fetch('globe_data.json');
+    const response = await fetch('neerja/public/globe_data.json');
     const data = await response.json();
     
     // Create arrays to hold point positions and colors

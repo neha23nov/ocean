@@ -17,6 +17,7 @@ import SpeciesDetailPage from "./pages/SpeciesDetailPage";
 
 import Research from "./pages/Research";
 import ResearchHeader from "./components/Research_header";
+import SalinityGlobe from "./pages/salinity";
 
 
 function App() {
@@ -124,7 +125,30 @@ function App() {
             </main>
           }
         />
-
+        <Route
+          path="/waste"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <PlasticPollutionGlobe />
+            </main>
+          }
+        />
+        <Route
+          path="/turbidity"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <TurbidityGlobe/>
+            </main>
+          }
+        />
+        <Route
+          path="/salinity"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <SalinityGlobe/>
+            </main>
+          }
+        />
       </Routes>
     </Router>
   );

@@ -17,7 +17,7 @@ export default function ResearchHeader() {
           key={item.name}
           to={item.path}
           className={({ isActive }) =>
-            `px-4 py-2 rounded-lg hover:bg-blue-50 hover:border hover:border-blue-300 transition-colors duration-200 ${
+            `px-4 py-2 rounded-lg hover:bg-blue-50 hover:border hover:border-blue-300 hover:text-black transition-colors duration-200 ${
               isActive ? "text-white font-semibold bg-blue-500" : "text-gray-300"
             }`
           }

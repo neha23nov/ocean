@@ -10,10 +10,7 @@ const GlobeViewer = () => {
   const globeRef = useRef(null);
   const cameraRef = useRef(null);
   const [dataLoaded, setDataLoaded] = useState(false);
-
-  const modelPredict = async ({ lat, lon }) => {
-    return { weight: Math.random() * 50 + 5, source: "predicted" };
-  };
+  const [pointsData, setPointsData] = useState([]);
 
   useEffect(() => {
     let renderer, camera, scene, globe;
@@ -38,53 +35,24 @@ const GlobeViewer = () => {
     dirLight.position.set(1, 1, 1);
     scene.add(dirLight);
 
-    fetch("/globe_data.json")
+    // Load salinity JSON
+    fetch("/salinity.json")
       .then((res) => res.json())
       .then((data) => {
+        setPointsData(data);
+
         globe = new Globe()
-          .globeImageUrl(
-            "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-          )
+          .globeImageUrl("//unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
           .pointsData(data)
-          .pointAltitude((d) => d.weight / 50)
-          .pointColor((d) => (d.source === "real" ? "red" : "blue"))
+          .pointLat((d) => d.lat)
+          .pointLng((d) => d.lon)
+          .pointColor(() => "cyan") // all points cyan
           .pointRadius(0.3);
 
         globeRef.current = globe;
         scene.add(globe);
         setDataLoaded(true);
       });
-
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-
-    const onClick = (event) => {
-      if (!globeRef.current || !globeRef.current.pointsMesh) return;
-
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(mouse, camera);
-
-      const intersects = raycaster.intersectObject(globeRef.current.pointsMesh);
-      if (intersects.length > 0) {
-        const pointIndex = intersects[0].index;
-        const point = globeRef.current.pointsData()[pointIndex];
-        if (point) {
-          tooltipRef.current.innerHTML = `
-            <strong>Lat:</strong> ${point.Latitude}<br>
-            <strong>Lon:</strong> ${point.Longitude}<br>
-            <strong>Weight:</strong> ${point.weight.toFixed(2)}<br>
-            <strong>Source:</strong> ${point.source}
-          `;
-          tooltipRef.current.style.left = event.clientX + 10 + "px";
-          tooltipRef.current.style.top = event.clientY + 10 + "px";
-          tooltipRef.current.style.display = "block";
-        }
-      } else {
-        tooltipRef.current.style.display = "none";
-      }
-    };
-    window.addEventListener("click", onClick);
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -101,7 +69,6 @@ const GlobeViewer = () => {
     window.addEventListener("resize", onResize);
 
     return () => {
-      window.removeEventListener("click", onClick);
       window.removeEventListener("resize", onResize);
       if (renderer) renderer.dispose();
       if (mountRef.current && renderer.domElement)
@@ -118,29 +85,27 @@ const GlobeViewer = () => {
     return new THREE.Vector3(x, y, z);
   };
 
-  const handlePredict = async () => {
+  const handleLocate = () => {
     if (!dataLoaded || !globeRef.current || !cameraRef.current) return;
 
     const lat = parseFloat(document.getElementById("lat").value);
     const lon = parseFloat(document.getElementById("lon").value);
 
-    if (isNaN(lat) || isNaN(lon))
-      return alert("Please enter valid Latitude and Longitude");
+    if (isNaN(lat) || isNaN(lon)) {
+      alert("Please enter valid Latitude and Longitude");
+      return;
+    }
 
-    const prediction = await modelPredict({ lat, lon });
-    const predictedPoint = {
-      Latitude: lat,
-      Longitude: lon,
-      weight: prediction.weight,
-      source: prediction.source,
-    };
+    const point = pointsData.find(
+      (p) => Math.abs(p.lat - lat) < 0.01 && Math.abs(p.lon - lon) < 0.01
+    );
 
-    globeRef.current.pointsData([
-      ...globeRef.current.pointsData(),
-      predictedPoint,
-    ]);
+    if (!point) {
+      alert("No salinity data found for this location");
+      return;
+    }
 
-    const target = latLonToVector3(lat, lon, 200);
+    const target = latLonToVector3(point.lat, point.lon, 200);
     gsap.to(cameraRef.current.position, {
       x: target.x * 1.5,
       y: target.y * 1.5,
@@ -149,22 +114,20 @@ const GlobeViewer = () => {
       onUpdate: () => cameraRef.current.lookAt(target),
     });
 
-    // Show tooltip for predicted point
     tooltipRef.current.innerHTML = `
-      <strong>Lat:</strong> ${predictedPoint.Latitude}<br>
-      <strong>Lon:</strong> ${predictedPoint.Longitude}<br>
-      <strong>Weight:</strong> ${predictedPoint.weight.toFixed(2)}<br>
-      <strong>Source:</strong> ${predictedPoint.source}
+      <strong>Latitude:</strong> ${point.lat}<br>
+      <strong>Longitude:</strong> ${point.lon}<br>
+      <strong>Salinity:</strong> ${point.sal.toFixed(2)}
     `;
-    tooltipRef.current.style.left = window.innerWidth / 2 + "px";
-    tooltipRef.current.style.top = window.innerHeight / 2 + "px";
+    tooltipRef.current.style.left = "50%";
+    tooltipRef.current.style.top = "50%";
+    tooltipRef.current.style.transform = "translate(-50%, -50%)";
     tooltipRef.current.style.display = "block";
   };
 
   return (
-    <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-        
-        <ResearchHeader />
+    <div style={{ position: "relative", width: "100vw", height: "100vh", background: "#000" }}>
+      <ResearchHeader />
       <div
         style={{
           position: "absolute",
@@ -174,7 +137,6 @@ const GlobeViewer = () => {
           backgroundColor: "rgba(0,0,0,0.8)",
           padding: "10px",
           borderRadius: "5px",
-          pointerEvents: "auto",
           display: "flex",
           gap: "15px",
           alignItems: "center",
@@ -183,8 +145,8 @@ const GlobeViewer = () => {
         <input
           id="lat"
           type="number"
-          placeholder="Latitude"
           step="0.01"
+          placeholder="Latitude"
           style={{
             padding: "5px",
             borderRadius: "3px",
@@ -197,8 +159,8 @@ const GlobeViewer = () => {
         <input
           id="lon"
           type="number"
-          placeholder="Longitude"
           step="0.01"
+          placeholder="Longitude"
           style={{
             padding: "5px",
             borderRadius: "3px",
@@ -209,7 +171,7 @@ const GlobeViewer = () => {
           }}
         />
         <button
-          onClick={handlePredict}
+          onClick={handleLocate}
           style={{
             padding: "5px 10px",
             borderRadius: "3px",
@@ -219,25 +181,22 @@ const GlobeViewer = () => {
             cursor: "pointer",
           }}
         >
-          Predict & Zoom
+          Locate & Zoom
         </button>
       </div>
 
-      <div ref={mountRef} />
-        
+      <div ref={mountRef} style={{ width: "100%", height: "100%" }} />
       <div
         ref={tooltipRef}
         style={{
-          
           position: "absolute",
-          right:"10px",
-          top:"20px",
           background: "rgba(0,0,0,0.7)",
           color: "white",
-          padding: "5px",
+          padding: "5px 10px",
+          borderRadius: "4px",
           display: "none",
           pointerEvents: "none",
-          borderRadius: "4px",
+          textAlign: "center",
         }}
       />
     </div>
