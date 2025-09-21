@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 data_file = os.path.join(BASE_DIR, "Indian_Ocean_surface_oce.tab")
 print(f"Looking for data file at: {data_file}")
 
-# --- Try loading the dataset ---
+# --- Load dataset ---
 try:
     df = pd.read_csv(
         data_file,
@@ -20,24 +20,24 @@ try:
         skiprows=19,
         engine="python"
     )
-    print(f"✅ Loaded dataset from {data_file}, shape:", df.shape)
+    print(f"✅ Loaded dataset, shape:", df.shape)
 except FileNotFoundError:
     print(f"❌ Error: The data file '{data_file}' was not found.")
     exit()
 
-# --- Clean and preprocess ---
+# --- Clean data ---
 df = df.dropna()
 df["Latitude"] = pd.to_numeric(df["Latitude"], errors="coerce")
 df["Longitude"] = pd.to_numeric(df["Longitude"], errors="coerce")
 df["Sal"] = pd.to_numeric(df["Sal"], errors="coerce")
-df = df.dropna()  # Drop any rows with NaN after conversion
+df = df.dropna()
 print("Data after cleaning, shape:", df.shape)
 
 if df.empty:
-    print("❌ Error: DataFrame is empty after cleaning. No JSON will be created.")
+    print("❌ Error: DataFrame is empty after cleaning.")
     exit()
 
-# --- Features and labels ---
+# --- Features & labels ---
 X = df[["Latitude", "Longitude"]]
 Y = df["Sal"]
 
@@ -52,27 +52,27 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 print("Mean squared error:", mean_squared_error(y_test, preds))
 
-# --- Generate prediction grid ---
-grid = []
+# --- Generate prediction grid efficiently ---
 lat_values = np.linspace(df["Latitude"].min(), df["Latitude"].max(), 50)
 lon_values = np.linspace(df["Longitude"].min(), df["Longitude"].max(), 50)
+lat_grid, lon_grid = np.meshgrid(lat_values, lon_values)
+lat_flat = lat_grid.flatten()
+lon_flat = lon_grid.flatten()
 
-for lat in lat_values:
-    for lon in lon_values:
-        new_data = pd.DataFrame([[lat, lon]], columns=["Latitude", "Longitude"])
-        sal = model.predict(new_data)[0]
-        grid.append({"lat": lat, "lon": lon, "sal": sal})
+grid_df = pd.DataFrame({"Latitude": lat_flat, "Longitude": lon_flat})
+sal_predictions = model.predict(grid_df)
+grid = [
+    {"lat": lat_flat[i], "lon": lon_flat[i], "sal": float(sal_predictions[i])}
+    for i in range(len(lat_flat))
+]
 
 print("Number of grid points generated:", len(grid))
 
 # --- Save JSON ---
-output_dir = os.path.join(BASE_DIR, "output")        # Define output folder
-output_file = os.path.join(output_dir, "C:\Users\peehu\OneDrive\Desktop\React\ocean\neerja\public\salanitty.json")  # Define JSON file path
+output_path = r"C:\Users\peehu\OneDrive\Desktop\React\ocean\neerja\public\salinity.json"
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+with open(output_path, "w") as f:
+    json.dump(grid, f, indent=4)
 
-with open(output_file, "w") as f:
-    json.dump(grid, f)
-
-print(f"✅ Prediction grid saved to {output_file}")
+print(f"✅ Prediction grid saved to {output_path}")
