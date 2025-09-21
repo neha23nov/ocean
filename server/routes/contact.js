@@ -1,22 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
-// optional: nodemailer if you want to send email
 
 router.post('/', async (req, res) => {
   try {
+    console.log("Received contact form:", req.body); // debug
+
     const { name, email, message } = req.body;
-    if (!name || !email || !message) return res.status(400).json({ msg: 'All fields required' });
 
-    const saved = await new Contact({ name, email, message }).save();
+    if (!name || !email || !message) {
+      return res.status(400).json({ msg: 'All fields are required' });
+    }
 
-    // OPTIONAL: send email using nodemailer (configure env EMAIL_USER/PASS)
-    // const nodemailer = require('nodemailer');
-    // ... send email logic ...
-
-    res.json({ msg: 'Message received', id: saved._id });
+    const savedContact = await new Contact({ name, email, message }).save();
+    res.json({ msg: 'Message received', id: savedContact._id });
   } catch (err) {
-    console.error(err);
+    console.error("Contact route error:", err);
     res.status(500).json({ msg: 'Server error' });
   }
 });

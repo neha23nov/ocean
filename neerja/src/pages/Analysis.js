@@ -110,11 +110,18 @@ const Analysis = () => {
         <div className="flex gap-4">
           {/* Dummy Images */}
           <div className="w-1/2 h-40 bg-gray-700 rounded-lg flex items-center justify-center">
-            Dummy Image 1
+            <img src="images/coral1.png" alt="Coral Reef 1" className="w-full h-full object-cover rounded-lg"/>
           </div>
-          <div className="w-1/2 h-40 bg-gray-700 rounded-lg flex items-center justify-center">
-            Dummy Image 2
-          </div>
+<div className="w-1/2 h-40 bg-gray-700 rounded-lg overflow-hidden">
+  <img
+    src="images/coral2.png"
+    alt="Coral Reef 2"
+    className="w-full h-full object-cover"
+  />
+</div>
+
+
+
         </div>
       </div>
 
