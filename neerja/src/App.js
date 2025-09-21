@@ -9,12 +9,17 @@ import ContactPage from "./pages/contact";
 import About from "./pages/About"; 
 import Analysis from "./pages/Analysis"; 
 import Biodiversity from "./pages/Biodiversity";
+import TurbidityGlobe from "./pages/turbidity";
+import PlasticPollutionGlobe from "./pages/waste";
 
 function App() {
   return (
     <Router>
+      {/* <TurbidityGlobe/> */}
+      {/* <PlasticPollutionGlobe/> */}
       <Navbar />
       <Routes>
+
         {/* Home with sidebar */}
         <Route
           path="/"
