@@ -1,4 +1,5 @@
 from sklearn.model_selection import train_test_split
+from fish import df
 
 # Features and target
 X = df.drop('migration_route_encoded', axis=1)  # or your target column
