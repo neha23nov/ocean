@@ -8,6 +8,7 @@ export default function ResearchHeader() {
     { name: "Salinity", path: "/salinity" },
     { name: "Water Quality", path: "/quality" },
     { name: "Nitrate", path: "/nitrate" },
+    { name: "Fish", path: "/fish" },
     { name: "Extra", path: "/extra" },
   ];
 
