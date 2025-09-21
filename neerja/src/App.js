@@ -103,6 +103,14 @@ function App() {
             </main>
           }
         />
+        <Route
+          path="/waste"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <PlasticPollutionGlobe />
+            </main>
+          }
+        />
       </Routes>
     </Router>
   );
