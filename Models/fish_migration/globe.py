@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # Load your dataset
-df = pd.read_csv("fish migration oceans.csv")  # replace with your CSV path
+df = pd.read_csv("fish_migration/fish_migration_oceans.csv")  # replace with your CSV path
 
 # Create a globe with circles
 fig = go.Figure()
