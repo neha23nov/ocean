@@ -45,66 +45,67 @@ const BiodiversityPage = () => {
         </div>
 
         {/* Featured Species Carousel */}
-        <section className="fade-in" style={{ animationDelay: "100ms" }}>
-          <h3 className="text-3xl md:text-4xl font-bold text-white">
-            Featured & Endangered Species
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Hawksbill Sea Turtle",
-                status: "Critically Endangered",
-                statusColor: "red-500",
-                description:
-                  "Known for their beautiful shells, they are vital for coral reef health. Threatened by poaching and habitat loss.",
-                image:
-                  "https://images.unsplash.com/photo-1544563273-d5a23b91da80?q=80&w=2070&auto=format&fit=crop",
-              },
-              {
-                title: "Vaquita",
-                status: "Critically Endangered",
-                statusColor: "red-500",
-                description:
-                  "The world's rarest marine mammal, on the brink of extinction due to illegal fishing net entanglement.",
-                image:
-                  "https://images.unsplash.com/photo-1627964924294-39912198b1b5?q=80&w=2070&auto=format&fit=crop",
-              },
-              {
-                title: "Bluefin Tuna",
-                status: "Endangered",
-                statusColor: "orange-500",
-                description:
-                  "A magnificent predator facing severe overfishing. Crucial for maintaining balance in the marine food web.",
-                image:
-                  "https://images.unsplash.com/photo-1614279261272-91e1c75952f4?q=80&w=1964&auto=format&fit=crop",
-              },
-            ].map((species, idx) => (
-              <div
-                key={idx}
-                className="relative overflow-hidden rounded-xl shadow-lg bg-background-light dark:bg-background-dark/50"
-              >
-                <img
-                  src={species.image}
-                  alt={species.title}
-                  className="w-full h-64 md:h-80 object-cover rounded-t-xl"
-                />
-                <div className="p-6">
-                  <span
-                    className={`absolute top-4 right-4 text-white text-xs font-bold px-2 py-1 rounded-full bg-${species.statusColor}/80`}
-                  >
-                    {species.status}
-                  </span>
-                  <h4 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-2">
-                    {species.title}
-                  </h4>
-                  <p className="text-white mb-4">
-                    {species.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <section className="fade-in " style={{ animationDelay: "100ms" }}>
+       <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
+  Featured & Endangered Species
+</h3>
+
+
+
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {[
+    {
+      title: "Hawksbill Sea Turtle",
+      status: "Critically Endangered",
+      statusColor: "red-500",
+      description:
+        "Known for their beautiful shells, they are vital for coral reef health. Threatened by poaching and habitat loss.",
+      image: "images/img2.jpg",
+    },
+    {
+      title: "Vaquita",
+      status: "Critically Endangered",
+      statusColor: "red-500",
+      description:
+        "The world's rarest marine mammal, on the brink of extinction due to illegal fishing net entanglement.",
+      image: "images/img3.png",
+    },
+    {
+      title: "Bluefin Tuna",
+      status: "Endangered",
+      statusColor: "orange-500",
+      description:
+        "A magnificent predator facing severe overfishing. Crucial for maintaining balance in the marine food web.",
+      image: "images/img4.png",
+    },
+  ].map((species, idx) => (
+    <div
+      key={idx}
+      className="relative overflow-hidden rounded-xl shadow-lg bg-background-light dark:bg-background-dark/50"
+    >
+      <img
+        src={species.image}
+        alt={species.title}
+        className="w-full h-64 md:h-80 object-cover rounded-t-xl"
+      />
+      <div className="p-6">
+        <span
+          className={`absolute top-4 right-4 text-white text-xs font-bold px-2 py-1 rounded-full bg-${species.statusColor}/80`}
+        >
+          {species.status}
+        </span>
+        <h4 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-2">
+          {species.title}
+        </h4>
+        <p className="text-white mb-4">
+          {species.description}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
+    </section>
+
 
         {/* Marine Species Grid */}
         <section className="fade-in mt-12" style={{ animationDelay: "150ms" }}>
@@ -128,7 +129,7 @@ const BiodiversityPage = () => {
                   ></div>
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <h4 className="font-semibold text-white">
+                <h4 className="font-semibold text-yellow-300 mb-1">
                   {species.name}
                 </h4>
                 <p className="text-sm text-white">
@@ -138,6 +139,33 @@ const BiodiversityPage = () => {
             ))}
           </div>
         </section>
+
+
+
+         {/* Ecosystems */}
+         <section className="fade-in mt-16">  {/* 👈 Added margin-top */}
+  <h3 className="text-4xl font-bold mb-8 text-white">Ecosystems</h3> 
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { title: "Mangrove Forests", desc: "Coastal nurseries of the sea", img: "images/bio1.png" },
+                { title: "Kelp Forests", desc: "Underwater forests of the coast", img: "images/bio2.png" },
+                { title: "Seagrass Beds", desc: "Submerged meadows of the ocean", img: "images/bio3.png" },
+                { title: "Deep Sea Vents", desc: "Mysterious deep-sea habitats", img: "images/bio4.png " },
+              ].map((eco, i) => (
+                <div key={i} className="relative overflow-hidden rounded-xl group">
+                  <img src={eco.img} alt={eco.title} className="h-64 w-full object-cover group-hover:scale-105 transition-transform" />
+                 <div className="absolute inset-0 bg-black/50 flex flex-col justify-end p-4">
+  <h4 className="font-bold text-xl text-yellow-300">{eco.title}</h4>
+  <p className="text-gray-200">{eco.desc}</p>
+</div>
+
+                </div>
+              ))}
+            </div>
+
+
+          </section>
       </main>
       <footer className="bg-background-light dark:bg-background-dark border-t border-primary/20 dark:border-primary/30 mt-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-6 text-center text-sm text-white">

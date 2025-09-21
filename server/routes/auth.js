@@ -5,14 +5,15 @@ const User = require("../models/User");
 // REGISTER
 router.post("/register", async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    const user = new User({ username, email, password });
+    const { name, email, password } = req.body; // <-- use "name" instead of "username"
+    const user = new User({ name, email, password });
     await user.save();
     res.status(201).json({ message: "User registered successfully!" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // LOGIN
 router.post("/login", async (req, res) => {

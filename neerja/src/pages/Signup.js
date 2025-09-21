@@ -35,10 +35,10 @@ export default function Signup() {
         password: formData.password,
       });
       console.log("Signup success:", res.data);
-      navigate("/");
+      navigate("/"); // Redirect to home
     } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.msg || "Signup failed");
+      console.error("Signup error:", err);
+      alert(err.response?.data?.error || "Signup failed");
     }
   };
 
@@ -52,18 +52,22 @@ export default function Signup() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <div>
-            <label className="block mb-1 text-gray-300">Username</label>
+            <label className="block mb-1 text-gray-300">Full Name</label>
             <input
               type="text"
               name="name"
-              value={formData.username}
+              value={formData.name}
               onChange={handleChange}
-              placeholder="Your name"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Your full name"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+
+          {/* Email */}
           <div>
             <label className="block mb-1 text-gray-300">Email address</label>
             <input
@@ -72,10 +76,13 @@ export default function Signup() {
               value={formData.email}
               onChange={handleChange}
               placeholder="you@example.com"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+
+          {/* Password */}
           <div>
             <label className="block mb-1 text-gray-300">Password</label>
             <input
@@ -84,10 +91,13 @@ export default function Signup() {
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+
+          {/* Confirm Password */}
           <div>
             <label className="block mb-1 text-gray-300">Confirm Password</label>
             <input
@@ -96,10 +106,13 @@ export default function Signup() {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+
+          {/* Terms */}
           <div className="flex items-start space-x-2 text-sm text-gray-400">
             <input
               type="checkbox"
@@ -115,6 +128,8 @@ export default function Signup() {
               <a href="/privacy" className="text-blue-400 hover:underline">Privacy Policy</a>
             </span>
           </div>
+
+          {/* Submit */}
           <button
             type="submit"
             className="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded-md font-semibold"

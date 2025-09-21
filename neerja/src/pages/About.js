@@ -1,5 +1,6 @@
 import React from "react";
 
+
 function About() {
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-[#111618] text-white">
@@ -38,7 +39,7 @@ function About() {
               <div className="rounded-lg overflow-hidden">
                 <img
                   className="w-full h-full object-cover rounded-lg"
-                  src="https://via.placeholder.com/600x400"
+                  src="/images/ocean data.jpg"
                   alt="Ocean Data"
                 />
               </div>
@@ -49,7 +50,7 @@ function About() {
               <div className="rounded-lg overflow-hidden md:order-2">
                 <img
                   className="w-full h-full object-cover rounded-lg"
-                  src="https://via.placeholder.com/600x400"
+                  src="/images/img2.jpg" 
                   alt="Sea turtle swimming"
                 />
               </div>
@@ -71,32 +72,37 @@ function About() {
                 Explore a few examples of the powerful data visualizations available on our
                 interactive dashboard.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="group relative overflow-hidden rounded-lg">
-                    <img
-                      className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
-                      src="https://via.placeholder.com/300x200"
-                      alt={`Visualization ${i}`}
-                    />
-                    <div className="absolute inset-0 bg-black/50 flex items-end p-4">
-                      <p className="text-white font-semibold text-base">
-                        Visualization {i}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { title: "Sea Surface Temperature", img: "images/a1.png" },
+                { title:"ocean currents", img: "images/a2.png" },
+                { title: "Chlorophyll Concentration", img: "images/a3.png" },
+                { title: "Wave Height", img: "images/a4.png " },
+              ].map((eco, i) => (
+                <div key={i} className="relative overflow-hidden rounded-xl group">
+                  <img src={eco.img} alt={eco.title} className="h-64 w-full object-cover group-hover:scale-105 transition-transform" />
+                 <div className="absolute inset-0 bg-black/50 flex flex-col justify-end p-4">
+  <h4 className="font-bold text-xl text-yellow-300">{eco.title}</h4>
+  <p className="text-gray-200">{eco.desc}</p>
+</div>
+
+                </div>
+              ))}
+            </div>
+
+              
+            
             </div>
 
             {/* Data Sources */}
             <div className="bg-[#1A2226]/80 p-10 rounded-lg mb-20 backdrop-blur-sm">
-              <h3 className="text-3xl font-bold mb-8 text-center">Data Sources</h3>
-              <p className="text-white/80 text-center mb-10 text-lg max-w-4xl mx-auto leading-relaxed">
-                Our dashboard integrates data from various reputable sources, including
-                satellite observations, in-situ measurements from buoys and research
-                vessels, and global ocean models.
-              </p>
+             
+                 <img
+                  className="w-full h-full object-cover rounded-lg"
+                  src="/images/data.jpg" 
+                  alt="data"
+                />
+             
             </div>
 
             {/* Team & Contact */}
