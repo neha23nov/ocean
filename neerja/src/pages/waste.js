@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import Globe from "three-globe";
 import gsap from "gsap";
+import ResearchHeader from "../components/Research_header";
 
 const GlobeViewer = () => {
   const mountRef = useRef(null);
@@ -162,11 +163,12 @@ const GlobeViewer = () => {
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-        <GlobeViewer/>
+        <p>hey research</p>
+        <ResearchHeader />
       <div
         style={{
           position: "absolute",
-          top: 20,
+          top: 100,
           left: 20,
           zIndex: 999,
           backgroundColor: "rgba(0,0,0,0.8)",
@@ -174,7 +176,7 @@ const GlobeViewer = () => {
           borderRadius: "5px",
           pointerEvents: "auto",
           display: "flex",
-          gap: "5px",
+          gap: "15px",
           alignItems: "center",
         }}
       >
@@ -189,7 +191,7 @@ const GlobeViewer = () => {
             border: "1px solid #fff",
             backgroundColor: "#222",
             color: "white",
-            width: "80px",
+            width: "100px",
           }}
         />
         <input
@@ -203,7 +205,7 @@ const GlobeViewer = () => {
             border: "1px solid #fff",
             backgroundColor: "#222",
             color: "white",
-            width: "80px",
+            width: "100px",
           }}
         />
         <button
@@ -222,11 +224,14 @@ const GlobeViewer = () => {
       </div>
 
       <div ref={mountRef} />
-
+        
       <div
         ref={tooltipRef}
         style={{
+          
           position: "absolute",
+          right:"10px",
+          top:"20px",
           background: "rgba(0,0,0,0.7)",
           color: "white",
           padding: "5px",

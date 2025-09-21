@@ -111,6 +111,14 @@ function App() {
             </main>
           }
         />
+        <Route
+          path="/turbidity"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <TurbidityGlobe/>
+            </main>
+          }
+        />
       </Routes>
     </Router>
   );

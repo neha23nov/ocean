@@ -11,7 +11,7 @@ export default function Research() {
         <h1 className="text-2xl font-bold">Research Page Content</h1>
         <p>Here you can add more info about research, analysis, or visualizations.</p>
       </div>
-      <GlobeViewer/>
+      {/* <GlobeViewer/> */}
     </main>
   );
 }

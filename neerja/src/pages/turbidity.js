@@ -53,7 +53,7 @@ export default function TurbidityGlobe() {
 
     // Load JSON turbidity data
     let pointDataArray = [];
-    fetch("../../../Models/turbidity/turbidity_data.json")
+    fetch("/turbidity.json")
       .then((res) => res.json())
       .then((data) => {
         const positions = [];
