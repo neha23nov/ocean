@@ -7,16 +7,17 @@ export default function Navbar() {
   const navItems = [
     { name: "Overview", path: "/" },
      { name: "About", path: "/about" },
+     { name: "Research", path: "/research" },
     { name: "Analysis ", path: "/analysis" },
     {name:"Biodiversity", path:"/biodiversity"},
    { name: "Contact", path: "/contact" },
-   { name: "Research", path: "/research" },
+   
 
 
   ];
 
   return (
-    <nav className="bg-[#0D1117] text-white flex items-center justify-between px-6 py-3 shadow relative">
+        <nav className="bg-[#0D1117] text-white flex items-center justify-between px-6 py-3 shadow">
       {/* Left Logo + Hamburger */}
       <div className="flex items-center space-x-4">
         <span className="font-montserrat text-3xl font-bold">Neerja</span>
