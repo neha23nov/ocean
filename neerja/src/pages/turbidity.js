@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import ResearchHeader from "../components/Research_header";
 
 export default function TurbidityGlobe() {
   const mountRef = useRef(null);
@@ -151,7 +152,8 @@ export default function TurbidityGlobe() {
 
   return (
     <div className="relative w-screen h-screen bg-black">
-      <div className="absolute top-2 left-2 bg-black/60 text-white p-2 rounded flex gap-2 z-50">
+      <ResearchHeader/>
+      <div className="absolute top-28 left-2 bg-black/60 text-white p-2 rounded flex gap-2 z-50">
         <input
           id="lat"
           type="number"
@@ -176,7 +178,7 @@ export default function TurbidityGlobe() {
 
       <div
         ref={dataDisplayRef}
-        className="absolute top-16 left-2 bg-black/60 text-white p-2 rounded z-50"
+        className="absolute top-[100px] right-20 bg-black/60 text-white p-2 rounded z-50"
       >
         Enter coordinates and click Fetch Status.
       </div>

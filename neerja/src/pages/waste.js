@@ -163,7 +163,7 @@ const GlobeViewer = () => {
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-        <p>hey research</p>
+        
         <ResearchHeader />
       <div
         style={{

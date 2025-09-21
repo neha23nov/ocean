@@ -67,7 +67,7 @@ print("Number of grid points generated:", len(grid))
 
 # --- Save JSON ---
 output_dir = os.path.join(BASE_DIR, "output")        # Define output folder
-output_file = os.path.join(output_dir, "salinity_grid.json")  # Define JSON file path
+output_file = os.path.join(output_dir, "C:\Users\peehu\OneDrive\Desktop\React\ocean\neerja\public\salanitty.json")  # Define JSON file path
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
