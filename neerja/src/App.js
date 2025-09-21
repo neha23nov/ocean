@@ -22,6 +22,9 @@ import Waterquality from "./pages/waterquality";
 import Globe from "./pages/waste";
 import NitrateGlobe from "./pages/nitrate";
 import Fishscreen from "./pages/fishscreen";
+import BiodiversityPage from "./pages/Biodiversity";
+import OceanExplorerScreen from "./pages/bio";
+import MarineGalleryScreen from "./pages/bio";
 
 
 
@@ -175,6 +178,14 @@ function App() {
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <Fishscreen/>
+            </main>
+          }
+        />
+        <Route
+          path="/bio"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <MarineGalleryScreen/>
             </main>
           }
         />
