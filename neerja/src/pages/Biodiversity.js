@@ -137,19 +137,56 @@ const BiodiversityPage = () => {
   </h3>
   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
     {[
-      { 
-        name: "Coral Reefs", 
-        desc: "Vibrant ecosystems", 
-        img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCTHYoltExeT9wjF-wo8eso6giubZ8j38Ehd6mC8orgDaOj3BDcGYMWT93WytUmdG93W1BQsNw74FDXc-7jKr_URgkN6k6ci0IxQZ3lS65O8QRfPIvdl0Ow8jG2J480lZ1gpJ0wMFQtr2L91Q7w3jTm48tNfJpJLrd5fIdSOzwz3CmiVRmW5FdZtWz_AkLne5Ib7PQPge0Ixijldli-kfTQNFUG4ZgfVVWu2Ws9G-qRnCtmESf7crWLfv1H3AUcVqDjmp4p3s4JBVPZ",
-        details: "Coral reefs host thousands of marine species.",
-        datasetLink: "https://example.com/coral-reef-data",
-      },
-      { name: "Whales", desc: "Gentle giants", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAlQsvH9OHcMSl239VAkY9jZy_0TgM8aEwWCaivyu1DVoHRkADn-at6uCpuUD-DhpzOYSl4tYwEYFQ9wXu6OtMw6Rp5dmqEswOAbYBsxSOtLXhmvhPFu7c-wBtmpGwPAhf2JvmdFb3GXOJej6F95RzjbvZ8zI0nDtT9314Ta8xiaG4k1ZAAagrAVFCVVEYlifdp-hvmGp0dormJtQkhLNBWjNM1KVo8qviGRox8AM1ayg_UZwfzTDNndJeVlSN0Hq7eneg9Kfe4-N4b", details: "Whales are large marine mammals found in oceans.", datasetLink: "https://example.com/whales-data" },
-      { name: "Sea Turtles", desc: "Ancient mariners", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDM6MXkvnNWvVWCLvjF7TNE9nryd_tSTxAm7dHbXS4Yl7HJcC8NvbzH7qB980uPjI_moIjwQzcOH65m6Yf5ekcNqkS9YyddeVohaFUMZVWrSambp2DVg2hUYGB6cmBdKD6k1C1vIq-cEpy91m7cTfsYXXODCTB4ZNcCyx7CNKkOh2T1PAKZH1KuYioPobwVYrPq-gdyLa4cR7gxheFzc9UVs-OA4vmA24cqiq2NC1DFQeixhh4wcqGvDataKRw1OvL4TwYBpR9G-QhJ", details: "Sea turtles navigate oceans and lay eggs on beaches.", datasetLink: "https://example.com/sea-turtles-data" },
-      { name: "Seabirds", desc: "Aerial acrobats", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuANKG6p8ogSKSkkpQ4SSu_m8n5eb2fyAWv6PSs4tX6F0-3lRco92PcTKpkB52cGaIhOHuLRFjqayrfOcqI1uPzRdWJaVrKM_gXFLgQyRiYdViZHiMxwnUhv_2Lk9Ey_PVe2d9Jcod6pIBQhkJ6zly10ZQj6oAOvnDPjL_dbevOCKbiOF8k6ZL8VhMynjjxVxCxdj31s9ogy4MGW9JJsY4gZaVw9sQTP_6YtBioklfdtFdaj-aHkMWhQSkg0p52qW5FT_D2qrFRYlZ4T", details: "Seabirds live along coastlines and migrate long distances.", datasetLink: "https://example.com/seabirds-data" },
-      { name: "Fish", desc: "Diverse aquatic life", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCik4bbK1WhWKwm-FofQ4oqwBwAlTVYMXgYTBO4S6_1IO54YOByl6cQ4W-2psMB9UfpFVMC4WeKKEMvn43cw0UNpfp9ssJXk0vl_obf8NMli0mvG_6qg81eyACt_w7QxYSj_rLURY8ff6vdGrozDgFBt9TZB6tjaSiQ8ZhtixOHzTWmNjJxQtkrUB61yrCR5arUXofKfneRw-XGbubyY3aCNgTHVx2Tuf3aXWhbBo24Q0x-XOP012hm9oidvTxAWpJlVIyEPAHKc_kL", details: "Fish inhabit all levels of the ocean.", datasetLink: "https://example.com/fish-data" },
-      { name: "Marine Mammals", desc: "Intelligent inhabitants", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDD_dFL5ArWJdnUu_gGoQBxloI3cAVvt9vszj4A45XOjVNRwpCUHO6gfckMDwB7IYpawGn2xodVgUnnHqoaCEiIqwWSJ-Cph5wzGblYwcJJJEqb6XXzrCTFaP9o4a0mjbDQD-AnBsCAIS2vY7LX2fUgSjYNj5gveRGQ6F6o_J2uNbZacnHie7oNtsJJuHpCsrtcOLVzUHmR3kGVKVhvl0nbdu2KBp61VBB2l2tdh2Wn2EsOXV64XLIeOulb-eMrclaG2D2y3BdHE-2A", details: "Marine mammals like dolphins and seals are highly intelligent.", datasetLink: "https://example.com/marine-mammals-data" },
-    ].map((species, idx) => (
+  { 
+    name: "Coral Reefs", 
+    desc: "Vibrant ecosystems", 
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCTHYoltExeT9wjF-wo8eso6giubZ8j38Ehd6mC8orgDaOj3BDcGYMWT93WytUmdG93W1BQsNw74FDXc-7jKr_URgkN6k6ci0IxQZ3lS65O8QRfPIvdl0Ow8jG2J480lZ1gpJ0wMFQtr2L91Q7w3jTm48tNfJpJLrd5fIdSOzwz3CmiVRmW5FdZtWz_AkLne5Ib7PQPge0Ixijldli-kfTQNFUG4ZgfVVWu2Ws9G-qRnCtmESf7crWLfv1H3AUcVqDjmp4p3s4JBVPZ",
+    details: "Black Coral – threatened by harvesting and slow growth. Red Coral – endangered, collected for jewelry. Staghorn Corals – many species endangered due to bleaching and disease.",
+    datasetLink: "https://example.com/coral-reef-data",
+  },
+  { 
+    name: "Whales", 
+    desc: "Gentle giants", 
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAlQsvH9OHcMSl239VAkY9jZy_0TgM8aEwWCaivyu1DVoHRkADn-at6uCpuUD-DhpzOYSl4tYwEYFQ9wXu6OtMw6Rp5dmqEswOAbYBsxSOtLXhmvhPFu7c-wBtmpGwPAhf2JvmdFb3GXOJej6F95RzjbvZ8zI0nDtT9314Ta8xiaG4k1ZAAagrAVFCVVEYlifdp-hvmGp0dormJtQkhLNBWjNM1KVo8qviGRox8AM1ayg_UZwfzTDNndJeVlSN0Hq7eneg9Kfe4-N4b",
+    details: "Blue Whale – endangered, threatened by ship strikes and climate change. Fin Whale – vulnerable/endangered regionally due to hunting and noise. Sperm Whale – vulnerable, impacted by entanglement and ocean noise.",
+    datasetLink: "https://example.com/whales-data",
+  },
+  { 
+    name: "Sea Turtles", 
+    desc: "Ancient mariners", 
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDM6MXkvnNWvVWCLvjF7TNE9nryd_tSTxAm7dHbXS4Yl7HJcC8NvbzH7qB980uPjI_moIjwQzcOH65m6Yf5ekcNqkS9YyddeVohaFUMZVWrSambp2DVg2hUYGB6cmBdKD6k1C1vIq-cEpy91m7cTfsYXXODCTB4ZNcCyx7CNKkOh2T1PAKZH1KuYioPobwVYrPq-gdyLa4cR7gxheFzc9UVs-OA4vmA24cqiq2NC1DFQeixhh4wcqGvDataKRw1OvL4TwYBpR9G-QhJ",
+    details: "Olive Ridley – vulnerable, faces mass mortality from fishing nets. Green Turtle – endangered, threatened by habitat loss and poaching. Hawksbill Turtle – critically endangered due to illegal shell trade. Leatherback – vulnerable, declining due to plastics and nesting loss. Loggerhead – vulnerable, impacted by bycatch and climate-driven changes.",
+    datasetLink: "https://example.com/sea-turtles-data",
+  },
+  { 
+    name: "Seabirds", 
+    desc: "Aerial acrobats", 
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuANKG6p8ogSKSkkpQ4SSu_m8n5eb2fyAWv6PSs4tX6F0-3lRco92PcTKpkB52cGaIhOHuLRFjqayrfOcqI1uPzRdWJaVrKM_gXFLgQyRiYdViZHiMxwnUhv_2Lk9Ey_PVe2d9Jcod6pIBQhkJ6zly10ZQj6oAOvnDPjL_dbevOCKbiOF8k6ZL8VhMynjjxVxCxdj31s9ogy4MGW9JJsY4gZaVw9sQTP_6YtBioklfdtFdaj-aHkMWhQSkg0p52qW5FT_D2qrFRYlZ4T",
+    details: "Seabirds are important indicators of marine ecosystem health. Many species face threats from overfishing, habitat loss, and climate change-driven shifts in prey availability.",
+    datasetLink: "https://example.com/seabirds-data",
+  },
+  { 
+    name: "Fish", 
+    desc: "Diverse aquatic life", 
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCik4bbK1WhWKwm-FofQ4oqwBwAlTVYMXgYTBO4S6_1IO54YOByl6cQ4W-2psMB9UfpFVMC4WeKKEMvn43cw0UNpfp9ssJXk0vl_obf8NMli0mvG_6qg81eyACt_w7QxYSj_rLURY8ff6vdGrozDgFBt9TZB6tjaSiQ8ZhtixOHzTWmNjJxQtkrUB61yrCR5arUXofKfneRw-XGbubyY3aCNgTHVx2Tuf3aXWhbBo24Q0x-XOP012hm9oidvTxAWpJlVIyEPAHKc_kL",
+    details: "Napoleon Wrasse – endangered in Andaman & Lakshadweep reefs due to overfishing. Goliath Grouper – critically endangered in the Indian Ocean, vulnerable to overexploitation and habitat loss.",
+    datasetLink: "https://example.com/fish-data",
+  },
+  { 
+    name: "Marine Mammals", 
+    desc: "Intelligent inhabitants", 
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDD_dFL5ArWJdnUu_gGoQBxloI3cAVvt9vszj4A45XOjVNRwpCUHO6gfckMDwB7IYpawGn2xodVgUnnHqoaCEiIqwWSJ-Cph5wzGblYwcJJJEqb6XXzrCTFaP9o4a0mjbDQD-AnBsCAIS2vY7LX2fUgSjYNj5gveRGQ6F6o_J2uNbZacnHie7oNtsJJuHpCsrtcOLVzUHmR3kGVKVhvl0nbdu2KBp61VBB2l2tdh2Wn2EsOXV64XLIeOulb-eMrclaG2D2y3BdHE-2A",
+    details: "Irrawaddy Dolphin – endangered in the Bay of Bengal due to habitat loss. Indo-Pacific Humpback Dolphin – vulnerable, threatened by pollution and coastal development. Dugong – vulnerable and highly threatened in Indian waters by habitat degradation.",
+    datasetLink: "https://example.com/marine-mammals-data",
+  },
+  { 
+    name: "Sharks & Rays", 
+    desc: "Ocean predators & gliders", 
+    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Whale_shark_Georgia_aquarium.jpg/640px-Whale_shark_Georgia_aquarium.jpg",
+    details: "Whale Shark – endangered, often spotted along Gujarat coast. Hammerhead Sharks – several species endangered from overfishing and fin trade. Giant Manta Ray – endangered due to bycatch and slow reproduction. Devil Rays – vulnerable/endangered from fishing pressures and habitat degradation.",
+    datasetLink: "https://example.com/sharks-rays-data",
+  }
+].map((species, idx) => (
       <div
         key={idx}
         className="group text-center cursor-pointer"
