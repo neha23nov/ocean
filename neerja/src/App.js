@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./pages/navbar";
-import Sidebar from "./pages/Sidebar";
+
 import NeerjaHome from "./pages/neerjaHome";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -16,8 +16,9 @@ import Profile from "./pages/Profile";
 import SpeciesDetailPage from "./pages/SpeciesDetailPage";
 
 import Research from "./pages/Research";
-import ResearchHeader from "./components/Research_header";
+
 import SalinityGlobe from "./pages/salinity";
+import Waterquality from "./pages/waterquality";
 
 
 function App() {
@@ -33,8 +34,8 @@ function App() {
           path="/"
           element={
             <>
-              <Sidebar />
-              <main className="ml-64 mt-16 p-6 text-white bg-[#0D1117] min-h-screen">
+             
+              <main className="p-6 text-white bg-[#0D1117] min-h-screen w-full">
                 <NeerjaHome />
               </main>
             </>
@@ -146,6 +147,14 @@ function App() {
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <SalinityGlobe/>
+            </main>
+          }
+        />
+        <Route
+          path="/quality"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <Waterquality/>
             </main>
           }
         />
