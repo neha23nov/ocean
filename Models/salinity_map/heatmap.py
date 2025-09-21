@@ -1,4 +1,5 @@
-# Create a dummy DataFrame for demonstration purposes
+import pandas as pd
+from globe import df
 data = {
     'Latitude': [0, 10, 20, 30, 40],
     'Longitude': [0, 20, 40, 60, 80],

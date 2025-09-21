@@ -13,6 +13,7 @@ import TurbidityGlobe from "./pages/turbidity";
 import PlasticPollutionGlobe from "./pages/waste";
 import Research from "./pages/Research";
 import ResearchHeader from "./components/Research_header";
+import SalinityGlobe from "./pages/salinity";
 
 function App() {
   return (
@@ -116,6 +117,14 @@ function App() {
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <TurbidityGlobe/>
+            </main>
+          }
+        />
+        <Route
+          path="/salinity"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <SalinityGlobe/>
             </main>
           }
         />

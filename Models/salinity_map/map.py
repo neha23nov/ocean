@@ -51,4 +51,4 @@ HeatMap(heat_data, radius=25, blur=15, max_zoom=5).add_to(m)
 
 # Save and display map
 m.save("pollution_map.html")
-m
+
