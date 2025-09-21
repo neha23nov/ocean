@@ -12,10 +12,7 @@ export default function Navbar() {
 
 
 
-    { name: "About", path: "/about" },
-    { name: "Analysis", path: "/analysis" },
-    { name: "Biodiversity", path: "/biodiversity" },
-    { name: "Contact", path: "/contact" },
+    
 
      { name: "About", path: "/about" },
      { name: "Research", path: "/research" },
