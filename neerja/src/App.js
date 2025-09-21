@@ -11,6 +11,8 @@ import Analysis from "./pages/Analysis";
 import Biodiversity from "./pages/Biodiversity";
 import TurbidityGlobe from "./pages/turbidity";
 import PlasticPollutionGlobe from "./pages/waste";
+import Research from "./pages/Research";
+import ResearchHeader from "./components/Research_header";
 
 function App() {
   return (
@@ -89,6 +91,15 @@ function App() {
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <Biodiversity />
+            </main>
+          }
+        />
+
+        <Route
+          path="/research"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <Research />
             </main>
           }
         />
