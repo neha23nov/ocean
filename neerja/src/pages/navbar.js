@@ -9,10 +9,22 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Overview", path: "/" },
+
+
+
     { name: "About", path: "/about" },
     { name: "Analysis", path: "/analysis" },
     { name: "Biodiversity", path: "/biodiversity" },
     { name: "Contact", path: "/contact" },
+
+     { name: "About", path: "/about" },
+    { name: "Analysis ", path: "/analysis" },
+    {name:"Biodiversity", path:"/biodiversity"},
+   { name: "Contact", path: "/contact" },
+   { name: "Research", path: "/research" },
+
+
+
   ];
 
   const handleLogout = () => {

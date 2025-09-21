@@ -22,6 +22,7 @@ const BiodiversityPage = () => {
 
 
   return (
+    
     <div className="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200 min-h-screen">
       <main className="flex-grow w-full px-4 sm:px-6 lg:px-12 py-8 md:py-12 max-w-[1600px] mx-auto">
         <div className="fade-in mb-8">
