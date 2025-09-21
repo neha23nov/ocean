@@ -1,88 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../services/api";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    agree: false,
+    avatar: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    setLoading(true);
+    setError("");
 
     try {
-      const res = await register({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
-      console.log("Signup success:", res.data);
-      navigate("/"); // Redirect to home
+      // Register user
+      const res = await register(formData);
+
+      // Save user in context and localStorage (auto-login)
+      setUser(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
+
+      navigate("/"); // redirect home
     } catch (err) {
-      console.error("Signup error:", err);
-      alert(err.response?.data?.error || "Signup failed");
+      console.error("Signup API error:", err.response || err);
+      setError(err.response?.data?.error || err.message || "Signup failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#0D1117] text-white px-4">
       <div className="w-full max-w-md bg-[#161B22] rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center mb-2">Create your account</h2>
+        <h2 className="text-3xl font-bold text-center mb-2">Create Account</h2>
         <p className="text-center text-gray-400 mb-6">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-400 hover:underline">Log in</a>
+          <a href="/login" className="text-blue-400 hover:underline">
+            Log in
+          </a>
         </p>
 
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div>
-            <label className="block mb-1 text-gray-300">Full Name</label>
+            <label className="block mb-1 text-gray-300">Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Your full name"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Your Name"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
-          {/* Email */}
           <div>
-            <label className="block mb-1 text-gray-300">Email address</label>
+            <label className="block mb-1 text-gray-300">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               placeholder="you@example.com"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block mb-1 text-gray-300">Password</label>
             <input
@@ -91,50 +91,31 @@ export default function Signup() {
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
-          {/* Confirm Password */}
           <div>
-            <label className="block mb-1 text-gray-300">Confirm Password</label>
+            <label className="block mb-1 text-gray-300">Avatar URL (optional)</label>
             <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
+              type="text"
+              name="avatar"
+              value={formData.avatar}
               onChange={handleChange}
-              placeholder="••••••••"
-              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              placeholder="https://example.com/avatar.png"
+              className="w-full px-4 py-2 rounded-md bg-[#0D1117] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          {/* Terms */}
-          <div className="flex items-start space-x-2 text-sm text-gray-400">
-            <input
-              type="checkbox"
-              name="agree"
-              checked={formData.agree}
-              onChange={handleChange}
-              className="mt-1 accent-blue-500"
-              required
-            />
-            <span>
-              I agree to the{" "}
-              <a href="/terms" className="text-blue-400 hover:underline">Terms</a> and{" "}
-              <a href="/privacy" className="text-blue-400 hover:underline">Privacy Policy</a>
-            </span>
-          </div>
-
-          {/* Submit */}
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded-md font-semibold"
+            disabled={loading}
+            className={`w-full py-2 rounded-md font-semibold ${
+              loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-500"
+            }`}
           >
-            Create Account
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
       </div>

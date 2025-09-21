@@ -11,6 +11,9 @@ import Analysis from "./pages/Analysis";
 import Biodiversity from "./pages/Biodiversity";
 import TurbidityGlobe from "./pages/turbidity";
 import PlasticPollutionGlobe from "./pages/waste";
+import Profile from "./pages/Profile";
+import SpeciesDetailPage from "./pages/SpeciesDetailPage";
+
 
 function App() {
   return (
@@ -92,6 +95,22 @@ function App() {
             </main>
           }
         />
+
+        <Route
+  path="/profile"
+  element={
+    <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+      <Profile />
+    </main>
+  }
+/>
+
+<Route path="/" element={<biodiversity />} />
+        <Route path="/species/:name" element={<SpeciesDetailPage />} />
+
+
+
+
       </Routes>
     </Router>
   );
