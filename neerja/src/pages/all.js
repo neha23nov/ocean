@@ -40,10 +40,8 @@ export default function WaterQualityScreen() {
   }, []);
 
   const normalizeScores = (data) => {
-    // Waste score (lower waste is better)
     const wasteScore = Math.max(0, 100 - parseFloat(data.waste) * 5);
 
-    // Turbidity score
     let turbidityScore = 50;
     switch (data.turbidity) {
       case "Bening": turbidityScore = 100; break;
@@ -53,14 +51,12 @@ export default function WaterQualityScreen() {
       default: turbidityScore = 50;
     }
 
-    // Nitrate score (lower nitrate better for tourism/fishing, high is good for research)
     const nitrateVal = parseFloat(data.nitrate) || 0;
     let nitrateScore = 0;
     if (nitrateVal < 10) nitrateScore = 90;
     else if (nitrateVal < 30) nitrateScore = 70;
     else nitrateScore = 40;
 
-    // Salinity score (best at 35 PSU)
     const salinityVal = parseFloat(data.salinity) || 35;
     const salinityScore = Math.max(0, 100 - Math.abs(salinityVal - 35) * 3);
 
@@ -68,7 +64,6 @@ export default function WaterQualityScreen() {
   };
 
   const computeIndexes = (scores) => {
-    // Tourist index
     const tourist = (
       scores.wasteScore * 0.5 +
       scores.turbidityScore * 0.3 +
@@ -76,15 +71,13 @@ export default function WaterQualityScreen() {
       scores.salinityScore * 0.1
     );
 
-    // Researcher index
     const researcher = (
       scores.wasteScore * 0.25 +
-      (100 - scores.turbidityScore) * 0.25 + // variation is interesting
+      (100 - scores.turbidityScore) * 0.25 +
       (100 - scores.nitrateScore) * 0.25 +
       (100 - scores.salinityScore) * 0.25
     );
 
-    // Fisherman index
     const fisherman = (
       scores.wasteScore * 0.3 +
       scores.turbidityScore * 0.3 +
@@ -108,12 +101,10 @@ export default function WaterQualityScreen() {
       return;
     }
 
-    // Find nearest salinity
     const salPoint = salinityData.find(
       p => Math.abs(p.lat - lat) < 0.01 && Math.abs(p.lon - lon) < 0.01
     );
 
-    // Find nearest turbidity
     let turbPoint = null;
     let minDist = Infinity;
     turbidityData.forEach(p => {
@@ -124,7 +115,6 @@ export default function WaterQualityScreen() {
       }
     });
 
-    // Find nearest nitrate
     let nitratePoint = null;
     minDist = Infinity;
     nitrateData.forEach(p => {
@@ -135,7 +125,6 @@ export default function WaterQualityScreen() {
       }
     });
 
-    // Find nearest globe data
     let globePoint = null;
     minDist = Infinity;
     globeData.forEach(p => {
@@ -170,45 +159,73 @@ export default function WaterQualityScreen() {
   };
 
   return (
-    <div className="w-screen h-screen bg-black text-white p-6 overflow-y-auto">
+    <div className="w-screen min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white p-6">
       <ResearchHeader />
-      <div className="max-w-lg mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl mb-4">Water Quality Search</h2>
-        <div className="flex gap-2 mb-4">
+      <div className="max-w-4xl mx-auto bg-gray-900 p-8 rounded-2xl shadow-xl border border-blue-600 mt-7">
+        <h2 className="text-3xl font-bold mb-6 text-blue-400">Water Quality Search</h2>
+        <div className="flex gap-4 mb-6">
           <input id="lat" type="number" step="0.01" placeholder="Latitude"
-            className="px-2 py-1 bg-gray-800 border border-gray-500 rounded w-1/2" />
+            className="flex-1 px-4 py-3 bg-gray-800 border border-blue-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" />
           <input id="lon" type="number" step="0.01" placeholder="Longitude"
-            className="px-2 py-1 bg-gray-800 border border-gray-500 rounded w-1/2" />
+            className="flex-1 px-4 py-3 bg-gray-800 border border-blue-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" />
         </div>
         <button onClick={handleSearch}
-          className="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded">
+          className="w-full py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-semibold transition-all duration-200">
           Search / Predict
         </button>
 
         {result && (
-          <div className="mt-6 bg-black/70 p-4 rounded">
-            <h3 className="text-lg mb-2">Results:</h3>
-            <p><b>Salinity:</b> {result.salinity}</p>
-            <p><b>Turbidity:</b> {result.turbidity}</p>
-            <p><b>Nitrate:</b> {result.nitrate}</p>
-            <p><b>Waste:</b> {result.waste}</p>
-            <p><b>Source:</b> {result.source}</p>
+          <div className="mt-8 bg-gray-800/80 p-6 rounded-xl border border-blue-500 shadow-lg">
+            <h3 className="text-2xl mb-4 font-semibold text-blue-300">Results</h3>
+            <div className="grid grid-cols-2 gap-4 text-gray-100">
+              <p><b>Salinity:</b> {result.salinity}</p>
+              <p><b>Turbidity:</b> {result.turbidity}</p>
+              <p><b>Nitrate:</b> {result.nitrate}</p>
+              <p><b>Waste:</b> {result.waste}</p>
+              <p className="col-span-2"><b>Source:</b> {result.source}</p>
+            </div>
           </div>
         )}
 
         {indexes && (
-          <div className="mt-6 space-y-4">
-            <div className="bg-blue-900 p-4 rounded">
-              <h3 className="text-lg">🌴 Tourist Index</h3>
-              <p>{indexes.tourist} / 100</p>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Tourist Box */}
+            <div className="bg-gray-800 border border-blue-500 p-6 rounded-2xl text-center shadow-lg hover:scale-105 transition-transform duration-200">
+              <h3 className="text-2xl font-bold mb-3 text-blue-400">Tourist Index</h3>
+              <p className="text-4xl font-extrabold">{indexes.tourist} / 100</p>
+              <p className="mt-3 text-sm text-gray-300 italic">
+                {indexes.tourist > 75
+                  ? "Great spot for sightseeing — clean and clear!"
+                  : indexes.tourist > 50
+                  ? "Decent area, but some waste or turbidity present."
+                  : "Not recommended for tourism due to pollution."}
+              </p>
             </div>
-            <div className="bg-green-900 p-4 rounded">
-              <h3 className="text-lg">🔬 Researcher Index</h3>
-              <p>{indexes.researcher} / 100</p>
+
+            {/* Researcher Box */}
+            <div className="bg-gray-800 border border-blue-500 p-6 rounded-2xl text-center shadow-lg hover:scale-105 transition-transform duration-200">
+              <h3 className="text-2xl font-bold mb-3 text-blue-400">Researcher Index</h3>
+              <p className="text-4xl font-extrabold">{indexes.researcher} / 100</p>
+              <p className="mt-3 text-sm text-gray-300 italic">
+                {indexes.researcher > 75
+                  ? "High variability — excellent for scientific research."
+                  : indexes.researcher > 50
+                  ? "Moderate variability — potential for field studies."
+                  : "Stable but less diverse — limited research value."}
+              </p>
             </div>
-            <div className="bg-yellow-900 p-4 rounded">
-              <h3 className="text-lg">🎣 Fisherman Index</h3>
-              <p>{indexes.fisherman} / 100</p>
+
+            {/* Fisherman Box */}
+            <div className="bg-gray-800 border border-blue-500 p-6 rounded-2xl text-center shadow-lg hover:scale-105 transition-transform duration-200">
+              <h3 className="text-2xl font-bold mb-3 text-blue-400">Fisherman Index</h3>
+              <p className="text-4xl font-extrabold">{indexes.fisherman} / 100</p>
+              <p className="mt-3 text-sm text-gray-300 italic">
+                {indexes.fisherman > 75
+                  ? "Ideal fishing conditions — healthy waters."
+                  : indexes.fisherman > 50
+                  ? "Fair conditions — some challenges for fishing."
+                  : "Poor conditions — not suitable for fishing."}
+              </p>
             </div>
           </div>
         )}
