@@ -25,6 +25,8 @@ import Fishscreen from "./pages/fishscreen";
 import BiodiversityPage from "./pages/Biodiversity";
 import OceanExplorerScreen from "./pages/bio";
 import MarineGalleryScreen from "./pages/bio";
+import CombinedGlobeViewer from "./pages/all";
+import DataBox from "./pages/all";
 
 
 
@@ -186,6 +188,14 @@ function App() {
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <MarineGalleryScreen/>
+            </main>
+          }
+        />
+        <Route
+          path="/combined"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <DataBox/>
             </main>
           }
         />
