@@ -12,7 +12,7 @@ export default function Navbar() {
 
 
 
-    
+
 
      { name: "About", path: "/about" },
      { name: "Research", path: "/research" },
@@ -20,6 +20,7 @@ export default function Navbar() {
     {name:"Biodiversity", path:"/biodiversity"},
    { name: "Contact", path: "/contact" },
    { name: "Chatbot", path: "/chatbot" },
+   { name: "Bio", path: "/bio" },
    
 
 

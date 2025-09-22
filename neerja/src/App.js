@@ -18,6 +18,18 @@ import SalinityGlobe from "./pages/salinity";
 import Waterquality from "./pages/waterquality";
 import GeminiChatbot from "./pages/Chatbot"; // Ensure this file exists
 
+import Globe from "./pages/waste";
+import NitrateGlobe from "./pages/nitrate";
+import Fishscreen from "./pages/fishscreen";
+import BiodiversityPage from "./pages/Biodiversity";
+import OceanExplorerScreen from "./pages/bio";
+import MarineGalleryScreen from "./pages/bio";
+import CombinedGlobeViewer from "./pages/all";
+import DataBox from "./pages/all";
+
+
+
+
 function App() {
   return (
     <Router>
@@ -146,6 +158,38 @@ function App() {
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <GeminiChatbot />
+            </main>
+          }
+        />
+        <Route
+          path="/nitrate"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <NitrateGlobe/>
+            </main>
+          }
+        />
+        <Route
+          path="/fish"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <Fishscreen/>
+            </main>
+          }
+        />
+        <Route
+          path="/bio"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <MarineGalleryScreen/>
+            </main>
+          }
+        />
+        <Route
+          path="/combined"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <DataBox/>
             </main>
           }
         />
