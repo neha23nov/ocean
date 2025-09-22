@@ -27,6 +27,7 @@ import OceanExplorerScreen from "./pages/bio";
 import MarineGalleryScreen from "./pages/bio";
 import CombinedGlobeViewer from "./pages/all";
 import DataBox from "./pages/all";
+import OceanDashboard from "./pages/all";
 
 
 
@@ -195,7 +196,7 @@ function App() {
           path="/combined"
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
-              <DataBox/>
+              <OceanDashboard/>
             </main>
           }
         />

@@ -1,102 +1,94 @@
-import React, { useEffect, useState } from "react";
-import Papa from "papaparse"; // for CSV parsing
+import React, { useState, useEffect } from "react";
 import ResearchHeader from "../components/Research_header";
 
-const DataBox = () => {
-  const [nitrateData, setNitrateData] = useState([]);
-  const [wasteData, setWasteData] = useState([]);
+export default function WaterQualityScreen() {
+  const [salinityData, setSalinityData] = useState([]);
   const [turbidityData, setTurbidityData] = useState([]);
+  const [nitrateData, setNitrateData] = useState([]);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
-    // Load nitrate CSV
+    // Load all datasets
+    fetch("/salinity.json").then(res => res.json()).then(setSalinityData);
+    fetch("/turbidity.json").then(res => res.json()).then(setTurbidityData);
     fetch("/nitrate_predictions.csv")
-      .then((res) => res.text())
-      .then((csvText) => {
-        const parsed = Papa.parse(csvText, { header: true });
-        setNitrateData(parsed.data.slice(0, 5)); // take only first 5 rows for display
-      })
-      .catch((err) => console.error("Error loading nitrate:", err));
-
-    // Load waste JSON
-    fetch("/globe_data.json")
-      .then((res) => res.json())
-      .then((data) => setWasteData(data.slice(0, 5))) // first 5 entries
-      .catch((err) => console.error("Error loading waste:", err));
-
-    // Load turbidity JSON
-    fetch("/turbidity.json")
-      .then((res) => res.json())
-      .then((data) => setTurbidityData(data.slice(0, 5))) // first 5 entries
-      .catch((err) => console.error("Error loading turbidity:", err));
+      .then(res => res.text())
+      .then(text => {
+        const rows = text.split("\n").slice(1);
+        const parsed = rows.map(r => {
+          const [lat, lon, nitrate] = r.split(",");
+          return { lat: parseFloat(lat), lon: parseFloat(lon), nitrate: parseFloat(nitrate) };
+        }).filter(d => !isNaN(d.lat) && !isNaN(d.lon) && !isNaN(d.nitrate));
+        setNitrateData(parsed);
+      });
   }, []);
 
+  const handleSearch = () => {
+    const lat = parseFloat(document.getElementById("lat").value);
+    const lon = parseFloat(document.getElementById("lon").value);
+
+    if (isNaN(lat) || isNaN(lon)) {
+      alert("Please enter valid coordinates");
+      return;
+    }
+
+    // Find nearest salinity
+    const salPoint = salinityData.find(p => Math.abs(p.lat - lat) < 0.01 && Math.abs(p.lon - lon) < 0.01);
+
+    // Find nearest turbidity
+    let turbPoint = null;
+    let minDist = Infinity;
+    turbidityData.forEach(p => {
+      const dist = Math.sqrt((lat - p.latitude) ** 2 + (lon - p.longitude) ** 2);
+      if (dist < minDist) {
+        minDist = dist;
+        turbPoint = p;
+      }
+    });
+
+    // Find nearest nitrate
+    let nitratePoint = null;
+    minDist = Infinity;
+    nitrateData.forEach(p => {
+      const dist = Math.sqrt((lat - p.lat) ** 2 + (lon - p.lon) ** 2);
+      if (dist < minDist) {
+        minDist = dist;
+        nitratePoint = p;
+      }
+    });
+
+    setResult({
+      salinity: salPoint ? salPoint.sal : "No data",
+      turbidity: turbPoint ? turbPoint.status : "No data",
+      nitrate: nitratePoint ? nitratePoint.nitrate.toFixed(2) : "No data"
+    });
+  };
+
   return (
-    
-   <div>
-    <ResearchHeader/>
-         <div
-      style={{
-        position: "absolute",
-        top: "70%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        background: "rgba(0,0,0,0.85)",
-        color: "white",
-        padding: "20px",
-        borderRadius: "10px",
-        maxWidth: "400px",
-        fontSize: "14px",
-        textAlign: "left",
-      }}
-    >
-      <h3 style={{ textAlign: "center", marginBottom: "10px" }}>
-        Ocean Data Overview
-      </h3>
+    <div className="w-screen h-screen bg-black text-white p-6">
+      <ResearchHeader />
+      <div className="max-w-lg mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl mb-4">Water Quality Search</h2>
+        <div className="flex gap-2 mb-4">
+          <input id="lat" type="number" step="0.01" placeholder="Latitude"
+            className="px-2 py-1 bg-gray-800 border border-gray-500 rounded w-1/2" />
+          <input id="lon" type="number" step="0.01" placeholder="Longitude"
+            className="px-2 py-1 bg-gray-800 border border-gray-500 rounded w-1/2" />
+        </div>
+        <button onClick={handleSearch}
+          className="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded">
+          Search
+        </button>
 
-      {/* Nitrate */}
-      <h4>Nitrate & Temperature</h4>
-      {nitrateData.length > 0 ? (
-        <ul>
-          {nitrateData.map((row, idx) => (
-            <li key={idx}>
-              Temp: {parseFloat(row.sea_water_temperature).toFixed(2)} °C | Nitrate:{" "}
-              {parseFloat(row.nitrate_concentration).toFixed(2)}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading nitrate data...</p>
-      )}
-
-      {/* Waste */}
-      <h4>Waste Levels (Weight)</h4>
-      {wasteData.length > 0 ? (
-        <ul>
-          {wasteData.map((row, idx) => (
-            <li key={idx}>
-              Lat: {row.Latitude}, Lon: {row.Longitude} → Waste: {row.weight}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading waste data...</p>
-      )}
-
-      {/* Turbidity */}
-      <h4>Turbidity Status</h4>
-      {turbidityData.length > 0 ? (
-        <ul>
-          {turbidityData.map((row, idx) => (
-            <li key={idx}>
-              Lat: {row.latitude}, Lon: {row.longitude} → {row.status}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading turbidity data...</p>
-      )}
-    </div></div>
+        {result && (
+          <div className="mt-6 bg-black/70 p-4 rounded">
+            <h3 className="text-lg mb-2">Results:</h3>
+            <p><b>Salinity:</b> {result.salinity}</p>
+            <p><b>Turbidity:</b> {result.turbidity}</p>
+            <p><b>Nitrate:</b> {result.nitrate}</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
-};
-
-export default DataBox;
+}
