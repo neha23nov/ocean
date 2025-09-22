@@ -13,30 +13,43 @@ import {
 
 // Data
 const temperatureData = [
-  { month: "Jan", value: 18 },
-  { month: "Feb", value: 20 },
-  { month: "Mar", value: 22 },
-  { month: "Apr", value: 21 },
-  { month: "May", value: 23 },
-  { month: "Jun", value: 24 },
-  { month: "Jul", value: 22 },
+  { month: "Jan", value: 27.5 },
+  { month: "Feb", value: 28.0 },
+  { month: "Mar", value: 28.5 },
+  { month: "Apr", value: 29.0 },
+  { month: "May", value: 28.8 },
+  { month: "Jun", value: 28.2 },
+  { month: "Jul", value: 27.8 },
+  { month: "Aug", value: 27.6 },
+  { month: "Sep", value: 27.9 },
+  { month: "Oct", value: 28.5 },
+  { month: "Nov", value: 28.4 },
+  { month: "Dec", value: 27.8 },
 ];
 
 const salinityData = [
-  { month: "Jan", value: 34 },
-  { month: "Feb", value: 35 },
-  { month: "Mar", value: 36 },
-  { month: "Apr", value: 35 },
-  { month: "May", value: 34.5 },
-  { month: "Jun", value: 35 },
-  { month: "Jul", value: 34.8 },
+  { month: "Jan", value: 35.1 },
+  { month: "Feb", value: 35.2 },
+  { month: "Mar", value: 35.3 },
+  { month: "Apr", value: 35.4 },
+  { month: "May", value: 35.2 },
+  { month: "Jun", value: 34.8 },
+  { month: "Jul", value: 34.5 },
+  { month: "Aug", value: 34.6 },
+  { month: "Sep", value: 34.9 },
+  { month: "Oct", value: 35.0 },
+  { month: "Nov", value: 35.1 },
+  { month: "Dec", value: 35.2 },
 ];
 
 const fishCatchData = [
-  { species: "Cod", kg: 1500 },
-  { species: "Salmon", kg: 1000 },
-  { species: "Tuna", kg: 600 },
-  { species: "Mackerel", kg: 1800 },
+  { species: "Yellowfin Tuna", kg: 500000 },
+  { species: "Skipjack Tuna", kg: 1300000 },
+  { species: "Indian Mackerel", kg: 850000 },
+  { species: "Indian Oil Sardine", kg: 600000 },
+  { species: "Jacks, Mackerels & Horse Mackerels", kg: 450000 },
+  { species: "Barracudas & Seapikes", kg: 200000 },
+  { species: "Indian Scad", kg: 150000 },
 ];
 
 const Analysis = () => {

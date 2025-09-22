@@ -43,8 +43,8 @@ export default function Home() {
   </div>
 </div>
 
-{/* Content Below the Globe */}
-<div className="w-full bg-black py-16 px-6 flex flex-col items-center">
+
+{/* <div className="w-full bg-black py-16 px-6 flex flex-col items-center">
 
   <p className="text-white text-4xl md:text-5xl font-bold text-center">
     Our Vision
@@ -60,22 +60,22 @@ export default function Home() {
       <p className="text-white text-center">Vision 1</p>
     </div>
 
-    {/* Card 2 */}
+
     <div className="bg-gray-900 border border-white rounded-xl p-6 flex items-center justify-center hover:scale-105 transition-transform duration-300">
       <p className="text-white text-center">Vision 2</p>
     </div>
 
-    {/* Card 3 */}
+
     <div className="bg-gray-900 border border-white rounded-xl p-6 flex items-center justify-center hover:scale-105 transition-transform duration-300">
       <p className="text-white text-center">Vision 3</p>
     </div>
 
-    {/* Card 4 */}
+
     <div className="bg-gray-900 border border-white rounded-xl p-6 flex items-center justify-center hover:scale-105 transition-transform duration-300">
       <p className="text-white text-center">Vision 4</p>
     </div>
   </div>
-</div>
+</div> */}
 
 
     </div>

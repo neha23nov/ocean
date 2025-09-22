@@ -9,7 +9,7 @@ export default function ResearchHeader() {
     { name: "Water Quality", path: "/quality" },
     { name: "Nitrate", path: "/nitrate" },
     { name: "Fish", path: "/fish" },
-    { name: "Extra", path: "/combined" },
+    { name: "Analysis", path: "/combined" },
   ];
 
   return (
