@@ -13,13 +13,18 @@ import {
 
 // Data
 const temperatureData = [
-  { month: "Jan", value: 18 },
-  { month: "Feb", value: 20 },
-  { month: "Mar", value: 22 },
-  { month: "Apr", value: 21 },
-  { month: "May", value: 23 },
-  { month: "Jun", value: 24 },
-  { month: "Jul", value: 22 },
+  { month: "Jan", value: 27.5 },
+  { month: "Feb", value: 28.0 },
+  { month: "Mar", value: 28.5 },
+  { month: "Apr", value: 29.0 },
+  { month: "May", value: 28.8 },
+  { month: "Jun", value: 28.2 },
+  { month: "Jul", value: 27.8 },
+  { month: "Aug", value: 27.6 },
+  { month: "Sep", value: 27.9 },
+  { month: "Oct", value: 28.5 },
+  { month: "Nov", value: 28.4 },
+  { month: "Dec", value: 27.8 },
 ];
 
 const salinityData = [
