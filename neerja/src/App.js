@@ -11,38 +11,29 @@ import Analysis from "./pages/Analysis";
 import Biodiversity from "./pages/Biodiversity";
 import TurbidityGlobe from "./pages/turbidity";
 import PlasticPollutionGlobe from "./pages/waste";
-
 import Profile from "./pages/Profile";
 import SpeciesDetailPage from "./pages/SpeciesDetailPage";
-
 import Research from "./pages/Research";
-
 import SalinityGlobe from "./pages/salinity";
 import Waterquality from "./pages/waterquality";
-
+import GeminiChatbot from "./pages/Chatbot"; // Ensure this file exists
 
 function App() {
   return (
     <Router>
-      {/* <TurbidityGlobe/> */}
-      {/* <PlasticPollutionGlobe/> */}
       <Navbar />
       <Routes>
-
-        {/* Home with sidebar */}
+        {/* Home Page */}
         <Route
           path="/"
           element={
-            <>
-             
-              <main className="p-6 text-white bg-[#0D1117] min-h-screen w-full">
-                <NeerjaHome />
-              </main>
-            </>
+            <main className="p-6 text-white bg-[#0D1117] min-h-screen w-full">
+              <NeerjaHome />
+            </main>
           }
         />
 
-        {/* Login Page */}
+        {/* Login & Signup */}
         <Route
           path="/login"
           element={
@@ -51,8 +42,6 @@ function App() {
             </div>
           }
         />
-
-        {/* Signup Page */}
         <Route
           path="/signup"
           element={
@@ -62,7 +51,7 @@ function App() {
           }
         />
 
-        {/* Contact Page */}
+        {/* Static Pages */}
         <Route
           path="/contact"
           element={
@@ -71,8 +60,6 @@ function App() {
             </main>
           }
         />
-
-        {/* About Page */}
         <Route
           path="/about"
           element={
@@ -81,8 +68,6 @@ function App() {
             </main>
           }
         />
-
-        {/* Analysis Page */}
         <Route
           path="/analysis"
           element={
@@ -91,8 +76,6 @@ function App() {
             </main>
           }
         />
-
-        {/* Biodiversity Page */}
         <Route
           path="/biodiversity"
           element={
@@ -102,30 +85,28 @@ function App() {
           }
         />
 
+        {/* Profile & Species */}
         <Route
-
-  path="/profile"
-  element={
-    <main className="min-h-screen p-6 text-white bg-[#0D1117]">
-      <Profile />
-    </main>
-  }
-/>
-
-<Route path="/" element={<biodiversity />} />
+          path="/profile"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <Profile />
+            </main>
+          }
+        />
         <Route path="/species/:name" element={<SpeciesDetailPage />} />
 
-
-
-
-
-          <Route path="/research"
+        {/* Research */}
+        <Route
+          path="/research"
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
               <Research />
             </main>
           }
         />
+
+        {/* Globes */}
         <Route
           path="/waste"
           element={
@@ -138,7 +119,7 @@ function App() {
           path="/turbidity"
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
-              <TurbidityGlobe/>
+              <TurbidityGlobe />
             </main>
           }
         />
@@ -146,7 +127,7 @@ function App() {
           path="/salinity"
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
-              <SalinityGlobe/>
+              <SalinityGlobe />
             </main>
           }
         />
@@ -154,7 +135,17 @@ function App() {
           path="/quality"
           element={
             <main className="min-h-screen p-6 text-white bg-[#0D1117]">
-              <Waterquality/>
+              <Waterquality />
+            </main>
+          }
+        />
+
+        {/* Chatbot */}
+        <Route
+          path="/chatbot"
+          element={
+            <main className="min-h-screen p-6 text-white bg-[#0D1117]">
+              <GeminiChatbot />
             </main>
           }
         />
